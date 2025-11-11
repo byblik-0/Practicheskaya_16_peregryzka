@@ -1,0 +1,34 @@
+internal class Point
+{
+    public int X { get; }
+    public int Y { get; }
+    public Point(int x, int y)
+    {
+        X = x;
+        Y = y;
+    }
+    public static Point operator +(Point z, Point j)
+    {
+        return new Point(z.X + j.X, z.Y + j.Y);
+    }
+    public static Point operator -(Point z, Point j)
+    {
+        return new Point(z.X - j.X, z.Y - j.Y);
+    }
+    public override string ToString()
+    {
+        return $"{X}, {Y}";
+    }
+
+}
+
+internal class Program
+{
+    private static void Main(string[] args)
+    {
+        var p1 = new Point(1, 2);
+        var p2 = new Point(3, 4);
+        Console.WriteLine(p1+p2);
+        Console.WriteLine(p1-p2);
+    }
+}
