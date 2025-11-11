@@ -1,0 +1,40 @@
+internal class Score
+{ 
+private int[] _scores = new int[5];
+private string[] _subjects = { "Математика", "Химия", "История"};
+
+public int this[int index]
+    {
+        get
+        {
+            if (index >= 0 && index < 5)
+                return _scores[index];
+            return 0;
+        }
+        set
+        {
+            if (index >= 0 && index < 5)
+                _scores[index] = value;
+        }
+    }
+public override string ToString()
+    {
+        for (int i = 0; i < _subjects.Length; i++)
+        {
+            Console.WriteLine($"{_subjects[i]} : Оценка {_scores[i]}");
+        }
+       return null;
+     }
+}
+
+internal class Program
+{
+    private static void Main(string[] args)
+    {
+        var s = new Score();
+        s[0] = 5;
+        s[1] = 4;
+        s[2] = 3;
+        s.ToString();
+    }
+}
