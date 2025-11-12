@@ -1,0 +1,68 @@
+internal class Vector
+{
+    private double[] _components;
+
+    public Vector(params double[] components)
+    {
+        _components = components;
+    }
+    public double this[int index]
+    {
+        get
+        {
+            if (index < 0 || index >= _components.Length)
+            {
+                Console.WriteLine("Индекс выходит за границы вектора");
+                return 0;
+            }
+            else
+            {
+                return _components[index];
+            }
+        }
+        set
+        {
+            if (index < 0 || index >= _components.Length)
+            {
+                Console.WriteLine("Индекс выходит за границы вектора");
+                return;
+            }
+            else
+            {
+                _components[index] = value;
+            }
+        }
+    }
+
+    public static double operator *(Vector v1, Vector v2)
+    {
+        if (v1 is null || v2 is null)
+            throw new ArgumentNullException("Векторы не могут быть null");
+
+        int minLength = Math.Min(v1._components.Length, v2._components.Length);
+        double result = 0;
+
+        for (int i = 0; i < minLength; i++)
+        {
+            result += v1[i] * v2[i];
+        }
+
+        return result;
+    }
+    public override string ToString()
+    {
+        return "[" + string.Join(", ", _components) + "]";
+    }
+}
+
+internal class Program
+{
+    private static void Main(string[] args)
+    {
+        var v1 = new Vector(1, 2, 3);
+        var v2 = new Vector(4, 5, 6);
+        Console.WriteLine(v1 * v2);
+        v1[1] = 10;
+        Console.WriteLine(v1);
+    }
+}
