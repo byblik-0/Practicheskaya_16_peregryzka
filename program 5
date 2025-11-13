@@ -1,0 +1,82 @@
+internal class Time
+{
+    private int hours;
+    private int minutes;
+    private int seconds;
+
+    public int Hours
+    {
+        get => hours; set
+        { hours = value >= 0 && value < 24 ? value : throw new ArgumentException("Часы должны быть от 0 до 23"); }
+    }
+    public int Minutes { get => minutes; set
+        {
+            minutes = value >= 0 && value < 60 ? value : throw new ArgumentException("Минуты должны быть от 0 до 59");
+        }
+    }
+    public int Seconds { get => seconds; set
+        {
+         seconds = value >= 0 && value < 60 ? value : throw new ArgumentException("Секунды должны быть от 0 до 59");
+        }
+    }
+    
+
+    public Time(int hours, int minutes, int seconds)
+    {
+       Hours = hours;
+       Minutes = minutes;
+       Seconds = seconds;
+    }
+    public int this[int index]
+    {
+        get
+        {
+            return index switch
+            {
+                0 => Hours,
+                1 => Minutes,
+                2 => Seconds,
+            };
+        }
+        set
+        {
+            switch(index)
+            {
+                case 0: Hours = value; break;
+                case 1: Minutes = value; break;
+                case 2: Seconds = value; break;
+            };
+        }
+    }
+
+    public static bool operator >(Time t1, Time t2)
+    {
+        return t1.ToSeconds() > t2.ToSeconds();
+    }
+
+    public static bool operator <(Time t1, Time t2)
+    {
+        return t1.ToSeconds() < t2.ToSeconds();
+    }
+    public int ToSeconds()
+    {
+        return Hours * 3600 + Minutes * 60 + Seconds;
+    }
+    public override string ToString()
+    {
+        return $"{Hours}:{Minutes}:{Seconds}";
+    }
+}
+
+internal class Program
+{
+    private static void Main(string[] args)
+    {
+        var t1 = new Time(14, 35, 9);
+        var t2 = new Time(9, 10, 5);
+        Console.WriteLine(t1 > t2);
+        Console.WriteLine(t1[1]);
+        t1[2] = 59;
+        Console.WriteLine(t1);
+    }
+}
